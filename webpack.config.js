@@ -1,33 +1,31 @@
 const path = require("path");
+const HtmlWebPlugin = require('html-webpack-plugin')
 
 module.exports = {
 
   // 入口文件
-  entry: "./src/index.js",
+  entry: {
+    index: "./src/index.js",
+    print: "./src/print.js"
+  },
+
+  // 配置插件
+  plugins: [
+    new HtmlWebPlugin({
+      title: '管理输出',
+    })
+  ],
+
   output: {
 
     // 打包后文件名称
-    filename: "bundle.js",
+    filename: '[name].bundle.js',
 
     // 打包后文件路径
     path: path.resolve(__dirname, "dist"),
+  
+    // 每次打包时 都会清除dist文件夹下的文件 然后将打包后的文件放入其中
+    clean: true
   },
 
-  // 模块化?
-  module: {
-    rules: [{
-
-        // 对所有以.css结尾的文件
-        test: /\.css$/i,
-
-        // 使用style-loader 和 css-loader 加载器
-        // 加载器执行顺序从后往前
-        use: ['style-loader', 'css-loader']
-      },
-      {
-        test: /\.(png|svg|jpg|jepg|gif|ico)$/i,
-        type: 'asset/resource',
-      }
-    ]
-  }
 };

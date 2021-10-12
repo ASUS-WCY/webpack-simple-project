@@ -1,20 +1,17 @@
 import _ from 'lodash';
-import './style.css'
-import icon from './static/vue.ico'
-
+import printMe from './print'
 
 function component() {
   const element = document.createElement('div');
+  const btn = document.createElement('button')
 
   // lodash 在当前 script 中使用 import 引入
   element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-  element.classList.add('hello')
 
-  // 将图像添加到我们已经存在的div中
-  const myIcon = new Image()
-  myIcon.src = icon
+  btn.innerHTML = 'click me and check the console!'
+  btn.onclick = printMe
 
-  element.appendChild(myIcon)
+  element.appendChild(btn)
 
   return element;
 }
