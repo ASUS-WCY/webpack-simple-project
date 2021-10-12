@@ -115,9 +115,16 @@ background-size: contain;
 1. 首先回退资源 确保文件夹保持整洁干净 如下所示
 
 ```html
-webpack-demo |- package.json |- webpack.config.js |- /dist |- /src |- index.js
-|- print.js |- /node_modules
+webpack-demo <br/> 
+|- package.json <br/>
+|- webpack.config.js <br/>
+|- /dist <br/>
+|- /src <br/>
+  |- index.js <br/>
+  |- print.js <br/>
+|- /node_modules
 ```
+
 
 2. 添加第二个入口文件 src/print.js 并写入以下内容
 
