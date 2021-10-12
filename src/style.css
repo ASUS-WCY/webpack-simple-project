@@ -1,0 +1,5 @@
+.hello {
+  color: red;
+  background: url(./static/logo192.png) no-repeat;
+  background-size: contain;
+}
