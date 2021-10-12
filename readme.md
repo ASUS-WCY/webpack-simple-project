@@ -115,16 +115,15 @@ background-size: contain;
 1. 首先回退资源 确保文件夹保持整洁干净 如下所示
 
 ```html
-webpack-demo <br/> 
-|- package.json <br/>
-|- webpack.config.js <br/>
-|- /dist <br/>
-|- /src <br/>
-  |- index.js <br/>
-  |- print.js <br/>
+webpack-demo <br />
+|- package.json <br />
+|- webpack.config.js <br />
+|- /dist <br />
+|- /src <br />
+|- index.js <br />
+|- print.js <br />
 |- /node_modules
 ```
-
 
 2. 添加第二个入口文件 src/print.js 并写入以下内容
 
@@ -210,8 +209,79 @@ npm i -D html-webpack-plugin
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    
+
     // 加上这句表示在每次打包时 都会清除dist文件夹下的文件 然后将打包后的文件放入其中
     clean: true,
    },
 ```
+
+### 设置开发环境
+
+1. 设置 webpack.config.js
+
+> 将 mode 设置为 'development'，并将 title 设置'Development'
+
+```javascript
+  module.exports = {
+    mode: 'development',
+    entry: {
+      ...
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        title: 'Development'
+      })
+    ]
+    ...
+  }
+```
+
+2. 设置成开发环境后 就可以用一些开发环境才能用的 开发工具，例如: soure map(用于追踪打包环境中 源码产生的错误和警告)、`webpack's watch mode` 、`webpack-dev-server` 、`webpack-dev-middleware`等
+
+- 使用 `webpack-dev-server`
+  > webpack-dev-server 为你提供了一个基本的 `web server`，并且具有 live loading (实时重新加载)功能
+  > 使用方法
+
+1. 安装 `webpack-dev-server`
+
+```
+npm i -D webpack-dev-server
+```
+
+2. 修改配置文件 `webpack.config.js`，告知 dev server，从什么位置查找文件：
+
+```javascript
+module.exports = {
+  entry:{...},
+  devServer:{
+  static: './dist'
+  },
+  plugins:[...]
+}
+```
+
+Tip
+
+       `webpack-dev-server` 会从 `output.path` 中定义的目录为服务提供 bundle 文件，即，文件将可以通过 `http://[devServer.host]:[devServer.port]/[output.publicPath]/[output.filename]` 进行访问。
+
+3. 添加一个可以直接运行的 dev server 的 script:
+
+```
+"scripts": {
+  "start": "webpack serve --open"
+}
+```
+
+### 使用 webpack-dev-middleware
+
+1. `webpack-dev-middleware` 作为一个封装器 会将webpack处理过的文件发送到一个server。
+
+> 使用流程参照官方: https://webpack.docschina.org/guides/development/
+
+
+### 热模块替换
+
+1.  更新 <font color="blue">webpack-dev-server</font> 的配置，然后使用 webpack 内置的 HMR 插件。我们还要删除掉 `print.js` 的入口起点， 因为现在已经在 `index.js` 模块中引用了它。
+
+> 使用流程参照官方: https://webpack.docschina.org/guides/hot-module-replacement/
+
